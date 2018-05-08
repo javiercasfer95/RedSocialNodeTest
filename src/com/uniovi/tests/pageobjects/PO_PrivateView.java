@@ -9,13 +9,13 @@ import com.uniovi.tests.utils.SeleniumUtils;
 public class PO_PrivateView extends PO_NavView {
 
 	public static void searchUser(WebDriver driver, String userName) {
-		WebElement search = driver.findElement(By.id("search"));
+		WebElement search = driver.findElement(By.id("textoBuscar"));
 		search.click();
 		search.clear();
 		search.sendKeys(userName);
 
 		// Pulsar el boton de buscar
-		By boton = By.id("searchButton");
+		By boton = By.id("btBuscar");
 		driver.findElement(boton).click();
 		SeleniumUtils.esperarSegundos(driver, 2);
 	}
