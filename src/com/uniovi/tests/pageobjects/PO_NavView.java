@@ -91,7 +91,7 @@ public class PO_NavView extends PO_View {
 	}
 
 	public static void accederAmigos(WebDriver driver) {
-		clickOption(driver, "id", "amigos");
+		clickOption(driver, "id", "listAmigos");
 	}
 
 	public static void clickOptionConCriterio(WebDriver driver, String textOption, String criterio,

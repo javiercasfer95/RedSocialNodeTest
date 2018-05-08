@@ -52,15 +52,38 @@ public class RedsocialnatorTests {
 	// @BeforeClass
 	public static void resetDatabaseToDefault() {
 		driver.navigate().to(URL);
+
+		// Primero reiniciamos la base de datos
+		/*
+		 * Esta nueva base de datos tiene varios usuarios, todos con la contraseña
+		 * 123456
+		 * 
+		 * Los usuarios principales son: javier@correo.es joni@correo.es admin@correo.es
+		 */
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "id", "login");
 		// Rellenamos el formulario con admin
 		PO_LoginView.fillForm(driver, "admin@correo.es", "123456");
-		PO_NavView.clickOptionConCriterio(driver, "userAdminMenu", "id", "userAdminMenu");
-		PO_NavView.clickOption(driver, "id", "restoreDBDefault");
+		// PO_NavView.clickOptionConCriterio(driver, "userAdminMenu", "id",
+		// "userAdminMenu");
+		PO_NavView.clickOption(driver, "id", "reloadDatabase");
 		SeleniumUtils.EsperaCargaPagina(driver, "id", "logout", 2);
 		PO_NavView.clickLogout(driver);
 
+		// //Nos logeamos como javier@correo.es y enviamos peticion de amistad a
+		// joni@correo.es
+		// iniciarSesion("javier@correo.es", "123456");
+		// PO_HomeView.clickOption(driver, "id", "userListPage");
+		// PO_PrivateView.clickOption(driver, "id", "btnjoni@correo.es");
+		// SeleniumUtils.esperarSegundos(driver, 1);
+		// PO_HomeView.clickOption(driver, "id", "logout");
+		//
+		// //Nos logeamos como joni y aceptamos la peticion de amistad
+		// iniciarSesion("joni@correo.es", "123456");
+		// PO_HomeView.clickOption(driver, "id", "userListPage");
+		// PO_PrivateView.clickOption(driver, "id", "btnjoni@correo.es");
+		// SeleniumUtils.esperarSegundos(driver, 1);
+		// PO_HomeView.clickOption(driver, "id", "logout");
 	}
 
 	// Antes de cada prueba se navega al URL home de la aplicaciónn
@@ -97,12 +120,6 @@ public class RedsocialnatorTests {
 		PO_HomeView.clickOption(driver, "id", "singup");
 		PO_RegisterView.fillForm(driver, "JaviTest@email.com", "JaviTest", "Castro", "123456", "123456");
 		PO_View.checkElement(driver, "id", "tituloLogin");
-
-		// PO_View.checkElement(driver, "id", "bienvenidaUser");
-		// SeleniumUtils.esperarSegundos(driver, 2);
-		// PO_View.checkElement(driver, "id", "bienvenidaUser");
-		// PO_HomeView.clickOption(driver, "id", "logout");
-		// PO_View.checkElement(driver, "id", "tituloLogin");
 	}
 
 	// 1.2 [RegInval] Registro de Usuario con datos inv�lidos (repetici�n de
@@ -115,19 +132,11 @@ public class RedsocialnatorTests {
 		PO_RegisterView.fillForm(driver, "JaviTest@email.com", "JaviTest", "Castro", "123456", "123456234");
 		PO_View.checkElement(driver, "id", "bandaAlerta");
 
-		// PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
-		// PO_HomeView.clickOption(driver, "signup", "id", "signup");
-		// PO_RegisterView.fillForm(driver, "preuba@emailmal", "Prueba", "Fernandez",
-		// "123456", "123456");
-		// SeleniumUtils.esperarSegundos(driver, 2);
-		// // Se ha metido el email mal, deberia estar ese campo de error
-		// PO_View.checkElement(driver, "id", "emailMal");
-
 	}
 
 	// 2.1 [InVal] Inicio de sesi�n con datos v�lidos.
 	// home. FUNCIONA
-	// @Test
+	//@Test
 	public void T02_1_InVal() {
 		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
 		// Vamos al formulario de logueo.
@@ -135,7 +144,8 @@ public class RedsocialnatorTests {
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, "javier@correo.es", "123456");
 		SeleniumUtils.esperarSegundos(driver, 2);
-		PO_View.checkElement(driver, "id", "bienvenidaUser");
+		PO_View.checkElement(driver, "id", "parrafoUsuariosSistema");
+		//PO_View.checkElement(driver, "id", "bienvenidaUser");
 		// Comprueba que vea la lista de usuarios
 		PO_HomeView.clickOption(driver, "id", "logout");
 		PO_View.checkElement(driver, "id", "bienvenidaHome");
@@ -159,7 +169,7 @@ public class RedsocialnatorTests {
 
 	// 3.1 [LisUsrVal] Acceso al listado de usuarios desde un usuario en sesion.
 	// FUNCIONA
-	// @Test
+	//@Test
 	public void T03_1_LisUsrVal() {
 		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
 		// Vamos al formulario de logueo.
@@ -168,7 +178,7 @@ public class RedsocialnatorTests {
 		// Una vez dentro clickamos en Usuarios y que nos lleve a la lista de usuarios
 		// del
 		// sistema.
-		PO_HomeView.clickOption(driver, "id", "userListPage");
+		//PO_HomeView.clickOption(driver, "id", "userListPage");
 
 		// Se comprueba que esta el texto de la pagina que dice que esos son los
 		// usuarios que hay en el sistema.
@@ -180,7 +190,7 @@ public class RedsocialnatorTests {
 	// al listado de usuarios
 	// desde un usuario en sesi�n. Debe producirse un acceso no permitido a vistas
 	// privadas. FUNCIONA
-	// @Test
+	//@Test
 	public void T03_2_LisUsrInVal() {
 		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
 		driver.navigate().to("http://localhost:8081/listUsers");
@@ -213,12 +223,14 @@ public class RedsocialnatorTests {
 
 	// 5.1 [InvVal] Enviar una invitacion de amistad a un usuario de forma valida.
 	// FUNCIONA
-	// @Test
+	//@Test
 	public void T05_1_InvVal() {
 		// Login valido
 		iniciarSesion("javier@correo.es", "123456");
 		PO_HomeView.clickOption(driver, "id", "userListPage");
-		PO_PrivateView.clickOption(driver, "id", "tnJuanFrancisco@live.com");
+		PO_PrivateView.searchUser(driver, "JuanFrancisco@live.com");
+		PO_View.checkElement(driver, "id", "filaDeJuanFrancisco@live.com");
+		PO_PrivateView.clickOption(driver, "id", "btnJuanFrancisco@live.com");
 		// assertTrue(PO_View.checkElementExists(driver, "id",
 		// "btnJuanFrancisco@live.com") == false);
 		PO_NavView.accederPeticionesEnviadas(driver);
@@ -242,59 +254,58 @@ public class RedsocialnatorTests {
 		// Login valido
 		iniciarSesion("javier@correo.es", "123456");
 		PO_NavView.accederPeticionesEnviadas(driver);
-		//Ya le hemos enviado la peticion a juan?
-		assertTrue(PO_View.checkElementExists(driver, "id", "filaDeJuanFrancisco@live.com") == true);
+//		// Ya le hemos enviado la peticion a juan?
+//		assertTrue(PO_View.checkElementExists(driver, "id", "filaDeJuanFrancisco@live.com") == false);
 
-		//Ahora vamos a intentar enviar otra. Tiene que saltar la alerta
+		// Ahora vamos a intentar enviar otra. Tiene que saltar la alerta
 		PO_HomeView.clickOption(driver, "id", "userListPage");
 		PO_PrivateView.clickOption(driver, "id", "tnJuanFrancisco@live.com");
-		
-		//Tenemos que comprobar que seguimos en la pagina de lista de usuarios y ha salido la franja
+
+		// Tenemos que comprobar que seguimos en la pagina de lista de usuarios y ha
+		// salido la franja
 		PO_View.checkElement(driver, "id", "parrafoUsuariosSistema");
 		assertTrue(PO_View.checkElementExists(driver, "id", "bandaAlerta") == true);
-		
-		//Hacemos lo mismo pero por URL
+
+		// Hacemos lo mismo pero por URL
 		driver.navigate().to("http://localhost:8081/peticion/enviar/JuanFrancisco@live.com");
 		PO_View.checkElement(driver, "id", "parrafoUsuariosSistema");
 		assertTrue(PO_View.checkElementExists(driver, "id", "bandaAlerta") == true);
 
 	}
-	
-	 // 6.1 [LisInvVal] Listar las invitaciones recibidas por un usuario, realizar la
-	 // comprobacion con una lista que al menos tenga una invitacion recibida. FUNCIONAAA
+
+	// 6.1 [LisInvVal] Listar las invitaciones recibidas por un usuario, realizar la
+	// comprobacion con una lista que al menos tenga una invitacion recibida.
+	// FUNCIONAAA
+	@Test
+	public void T06_1_LisInvVal() {
+		iniciarSesion("JuanFrancisco@live.com", "123456");
+
+		PO_NavView.accederPeticionesRecibidas(driver);
+		PO_View.checkElement(driver, "id", "filaDejavier@correo.es");
+	}
+
+	//
+	// 7.1 [AcepInvVal] Aceptar una invitacion recibida
+	//@Test
+	public void T07_1_AcepInvVal() {
+		iniciarSesion("JuanFrancisco@live.com", "123456");
+		PO_NavView.accederPeticionesRecibidas(driver);
+		PO_PrivateView.clickOption(driver, "id", "btnjavier@correo.esnoaceptada");
+		
+		//Comrpobamos que nos ha enviado a la pagina de usuarios y nos dice que le ha agregado como amigo
+		PO_HomeView.clickOption(driver, "id", "userListPage");
+		PO_View.checkElement(driver, "id", "parrafoUsuariosSistema");
+	}
+
+	 // 8.1 [ListAmiVal] Listar los amigos de un usuario, realizar la comprobacion
+	 // con una lista que al menos tenga un amigo. FUNCIONA
 	 //@Test
-	 public void T06_1_LisInvVal() {
-	 iniciarSesion("JuanFrancisco@live.com", "123456");
-//	 // Vamos a la pagina de usuarios por si acaso
-//	 PO_PrivateView.searchUser(driver, "joni");
-//	 PO_PrivateView.clickOption(driver, "id", "btnjoni@correo.es");
-//	 PO_NavView.clickLogout(driver);
-//	 iniciarSesion("joni@correo.es", "123456");
-	 
-	 PO_NavView.accederPeticionesRecibidas(driver);
-	 PO_View.checkElement(driver, "id", "filaDejavier@correo.es");
+	 public void T08_1_ListAmiVal() {
+	 iniciarSesion("javier@correo.es", "123456");
+	 PO_NavView.accederAmigos(driver);
+	 PO_View.checkElement(driver, "id", "JuanFrancisco@live.com");
 	 }
 	
-	// //
-	// // 7.1 [AcepInvVal] Aceptar una invitacion recibida
-	// @Test
-	// public void T07_1_AcepInvVal() {
-	// iniciarSesion("joni@correo.es", "123456");
-	// PO_NavView.accederPeticionesRecibidas(driver);
-	// PO_PrivateView.clickOption(driver, "id", "btnjavier@correo.es");
-	// assertTrue(PO_View.checkElementExists(driver, "id", "filaDejavier@correo.es")
-	// == false);
-	// }
-	//
-	// // 8.1 [ListAmiVal] Listar los amigos de un usuario, realizar la comprobacion
-	// // con una lista que al menos tenga un amigo.
-	// @Test
-	// public void T08_1_ListAmiVal() {
-	// iniciarSesion("javier@correo.es", "123456");
-	// PO_NavView.accederAmigos(driver);
-	// PO_View.checkElement(driver, "id", "filaDejoni@correo.es");
-	// }
-	//
 	// /*
 	// * 14.1 [AdLisUsrVal] Desde un usuario identificado en sesión como
 	// administrador
@@ -340,8 +351,20 @@ public class RedsocialnatorTests {
 	// driver.navigate().to("http://localhost:8090/debug/deleteUser?userBorraEmail=AshRodriguez@default.es");
 	// PO_View.checkElement(driver, "id", "tituloAccesoDenegado");
 	// }
+	 
+	 
+	 //A partir de aqui, pruebas del cliente rest
+	//C1.1 [ListAmiVal] Listar los amigos de un usuario, realizar la comprobacion
+		 // con una lista que al menos tenga un amigo. FUNCIONA
+		 //@Test
+		 public void TC01_1_CInVal() {
+		 iniciarSesion("javier@correo.es", "123456");
+		 PO_NavView.accederAmigos(driver);
+		 PO_View.checkElement(driver, "id", "JuanFrancisco@live.com");
+		 }
+	 
 
-	private void iniciarSesion(String email, String pass) {
+	private static void iniciarSesion(String email, String pass) {
 		// Vamos al formulario de logueo.
 		PO_NavView.clickOption(driver, "id", "login");
 		SeleniumUtils.esperarSegundos(driver, 2);
