@@ -443,10 +443,34 @@ public class RedsocialnatorTests {
 			
 			iniciarSesion("javier@correo.es", "123456");
 			//SeleniumUtils.esperarSegundos(driver, 1);
-			PO_View.checkElement(driver, "id", "filaDejoni@correo.es");
-			PO_View.checkElement(driver, "id", "filaDeash@correo.es");
-			PO_View.checkElement(driver, "id", "filaDepokemon@correo.es");
+
 			
+			
+			
+		}
+		
+		@Test
+		public void TC03_0_PrepararMensaje() {
+			driver.navigate().to(URLCliente);
+
+	        iniciarSesion("joni@correo.es", "123456");
+	        SeleniumUtils.esperarSegundos(driver, 1);
+	        PO_View.checkElement(driver, "id", "filaDejavier@correo.es");
+	        //Envio de mensajes
+			PO_NavView.clickOption(driver, "id", "chatDejavier@correo.es");
+	        PO_View.checkElement(driver, "id", "btEnviarMensaje");
+	        sendMessage(driver,"Mensaje 1");
+	        SeleniumUtils.esperarSegundos(driver, 1);
+	        PO_View.checkElement(driver, "text", "Mensaje 1");
+	        SeleniumUtils.esperarSegundos(driver, 1);   
+	        sendMessage(driver,"Mensaje 2");
+	        SeleniumUtils.esperarSegundos(driver, 1);
+	        PO_View.checkElement(driver, "text", "Mensaje 2");
+	        sendMessage(driver,"Mensaje 3");
+	        SeleniumUtils.esperarSegundos(driver, 1);
+	        PO_View.checkElement(driver, "text", "Mensaje 3");
+	        
+	        
 		}
 		
 		//C3.1 [CListMenVal] Acceder a la lista de mensajes de un amigo “chat”, la lista debe contener al menos
@@ -455,12 +479,19 @@ public class RedsocialnatorTests {
 		public void TC03_1_CListMenVal() {
 			driver.navigate().to(URLCliente);
 
+			
 	        iniciarSesion("javier@correo.es", "123456");
 	        SeleniumUtils.esperarSegundos(driver, 1);
 	        PO_View.checkElement(driver, "id", "filaDejoni@correo.es");
 	        PO_NavView.clickOption(driver, "id", "chatDejoni@correo.es");
 	        PO_View.checkElement(driver, "id", "btEnviarMensaje");
 	        //Falta comprobar mensajes
+	        PO_View.checkElement(driver, "text", "Mensaje 1");
+	        PO_View.checkElement(driver, "text", "Mensaje 2");
+	        PO_View.checkElement(driver, "text", "Mensaje 3");
+	        
+	        
+	        
 		}
 	
 		//C4.1 [CCrearMenVal] Acceder a la lista de mensajes de un amigo “chat” y crear un nuevo mensaje,
@@ -474,10 +505,13 @@ public class RedsocialnatorTests {
 	        PO_View.checkElement(driver, "id", "filaDejoni@correo.es");
 	        PO_NavView.clickOption(driver, "id", "chatDejoni@correo.es");
 	        PO_View.checkElement(driver, "id", "btEnviarMensaje");
-	        fillMessage(driver,"Mensaje 1");
+	        sendMessage(driver,"Mensaje 1");
 	        SeleniumUtils.esperarSegundos(driver, 1);
 	        PO_View.checkElement(driver, "text", "Mensaje 1");
 		}
+		
+
+				
 		
 		//C5.1 [CMenLeidoVal] Identificarse en la aplicación y enviar un mensaje a un amigo, validar que el
 		//mensaje enviado aparece en el chat. Identificarse después con el usuario que recibido el mensaje y validar
@@ -579,7 +613,7 @@ public class RedsocialnatorTests {
 	
 	
 	
-	public static void fillMessage(WebDriver driver, String message) {
+	public static void sendMessage(WebDriver driver, String message) {
 		WebElement textMessage = driver.findElement(By.name("textoMensaje"));
 		textMessage.click();
 		textMessage.clear();
