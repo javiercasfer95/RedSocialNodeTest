@@ -51,7 +51,7 @@ public class RedsocialnatorTests {
 		return driver;
 	}
 
-	//@BeforeClass
+	@BeforeClass
 	public static void resetDatabaseToDefault() {
 		driver.navigate().to(URL);
 
@@ -97,10 +97,11 @@ public class RedsocialnatorTests {
 	 * CASOS DE PRUEBA
 	 */
 	// 1.1 [RegVal] Registro de Usuario con datos válidos. FUNCIONA
-	//@Test
+	@Test
 	public void T01_1_RegVal() {
 		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
 		PO_HomeView.clickOption(driver, "id", "singup");
+		SeleniumUtils.esperarSegundos(driver, 1);
 		PO_RegisterView.fillForm(driver, "JaviTest@email.com", "JaviTest", "Castro", "123456", "123456");
 		SeleniumUtils.esperarSegundos(driver, 1);
 		PO_View.checkElement(driver, "id", "tituloLogin");
@@ -108,11 +109,12 @@ public class RedsocialnatorTests {
 
 	// 1.2 [RegInval] Registro de Usuario con datos inv�lidos (repetici�n de
 	// contrase�a invalida). FUNCIONA
-	//@Test
+	@Test
 	public void T01_2_RegInval() {
 
 		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
 		PO_HomeView.clickOption(driver, "id", "singup");
+		SeleniumUtils.esperarSegundos(driver, 1);
 		PO_RegisterView.fillForm(driver, "JaviTest@emailDistinto.com", "JaviTest", "Castro", "123456", "123456234");
 		PO_View.checkElement(driver, "id", "bandaAlerta");
 
@@ -120,12 +122,13 @@ public class RedsocialnatorTests {
 
 	// 2.1 [InVal] Inicio de sesi�n con datos v�lidos.
 	// home. FUNCIONA
-	//@Test
+	@Test
 	public void T02_1_InVal() {
 		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "id", "login");
 		// Rellenamos el formulario
+		SeleniumUtils.esperarSegundos(driver, 1);
 		PO_LoginView.fillForm(driver, "javier@correo.es", "123456");
 		SeleniumUtils.esperarSegundos(driver, 2);
 		PO_View.checkElement(driver, "id", "parrafoUsuariosSistema");
@@ -139,12 +142,13 @@ public class RedsocialnatorTests {
 	// 2.2 [InInVal] Inicio de sesión con datos inválidos (usuario no existente en
 	// la aplicación). FUNCIONA
 	// Español
-	//@Test
+	@Test
 	public void T02_2_InInVal() {
 		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "id", "login");
 		// Rellenamos el formulario
+		SeleniumUtils.esperarSegundos(driver, 1);
 		PO_LoginView.fillForm(driver, "josefaNoExiste@correo.es", "123456");
 		SeleniumUtils.esperarSegundos(driver, 2);
 		PO_View.checkElement(driver, "id", "bandaAlerta");
@@ -153,7 +157,7 @@ public class RedsocialnatorTests {
 
 	// 3.1 [LisUsrVal] Acceso al listado de usuarios desde un usuario en sesion.
 	// FUNCIONA
-	//@Test
+	@Test
 	public void T03_1_LisUsrVal() {
 		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
 		// Vamos al formulario de logueo.
@@ -174,7 +178,7 @@ public class RedsocialnatorTests {
 	// al listado de usuarios
 	// desde un usuario en sesi�n. Debe producirse un acceso no permitido a vistas
 	// privadas. FUNCIONA
-	//@Test
+	@Test
 	public void T03_2_LisUsrInVal() {
 		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
 		driver.navigate().to("http://localhost:8081/listUsers");
@@ -184,7 +188,7 @@ public class RedsocialnatorTests {
 
 	// 4.1 [BusUsrVal] Realizar una busqueda valida en el listado de usuarios desde
 	// un usuario en sesion. FUNCIONA
-	//@Test
+	@Test
 	public void T04_1_BusUsrVal() {
 		// Login valido
 		iniciarSesion("javier@correo.es", "123456");
@@ -198,7 +202,7 @@ public class RedsocialnatorTests {
 	// 4.2 [BusUsrInVal] Intento de acceso con URL a la busqueda de usuarios desde
 	// un usuario no identificado. Debe producirse un acceso no permitido a vistas
 	// privadas. FUNCIONA
-	//@Test
+	@Test
 	public void T04_2_BusUsrInVal() {
 		driver.navigate().to("http://localhost:8081/listUsers?busqueda=Zelda");
 		// Nos deberia redirigir a la pagina del login
@@ -206,12 +210,12 @@ public class RedsocialnatorTests {
 	}
 
 	// 5.1 [InvVal] Enviar una invitacion de amistad a un usuario de forma valida.
-	// FUNCIONA
-	//@Test
+	@Test
 	public void T05_1_InvVal() {
 		// Login valido
 		iniciarSesion("javier@correo.es", "123456");
 		PO_HomeView.clickOption(driver, "id", "userListPage");
+		SeleniumUtils.esperarSegundos(driver, 1);
 		PO_PrivateView.searchUser(driver, "noelia@correo.es");
 		PO_View.checkElement(driver, "id", "filaDenoelia@correo.es");
 		PO_PrivateView.clickOption(driver, "id", "btnnoelia@correo.es");
@@ -232,7 +236,7 @@ public class RedsocialnatorTests {
 	 * 
 	 * FUNCIONA
 	 */
-	//@Test
+	@Test
 	public void T05_2_InvInVal() {
 
 		// Login valido
@@ -244,6 +248,7 @@ public class RedsocialnatorTests {
 
 		// Ahora vamos a intentar enviar otra. Tiene que saltar la alerta
 		PO_HomeView.clickOption(driver, "id", "userListPage");
+		SeleniumUtils.esperarSegundos(driver, 1);
 		PO_PrivateView.searchUser(driver, "noelia");
 		PO_View.checkElement(driver, "id", "filaDenoelia@correo.es");
 		PO_PrivateView.clickOption(driver, "id", "btnnoelia@correo.es");
@@ -262,18 +267,17 @@ public class RedsocialnatorTests {
 
 	// 6.1 [LisInvVal] Listar las invitaciones recibidas por un usuario, realizar la
 	// comprobacion con una lista que al menos tenga una invitacion recibida.
-	// FUNCIONAAA
-	//@Test
+	@Test
 	public void T06_1_LisInvVal() {
 		iniciarSesion("noelia@correo.es", "123456");
-
+		SeleniumUtils.esperarSegundos(driver, 1);
 		PO_NavView.accederPeticionesRecibidas(driver);
 		PO_View.checkElement(driver, "id", "filaDejavier@correo.es");
 	}
 
 	//
 	// 7.1 [AcepInvVal] Aceptar una invitacion recibida
-	//@Test
+	@Test
 	public void T07_1_AcepInvVal() {
 		iniciarSesion("noelia@correo.es", "123456");
 		PO_NavView.accederPeticionesRecibidas(driver);
@@ -287,58 +291,13 @@ public class RedsocialnatorTests {
 
 	// 8.1 [ListAmiVal] Listar los amigos de un usuario, realizar la comprobacion
 	// con una lista que al menos tenga un amigo. FUNCIONA
-	//@Test
+	@Test
 	public void T08_1_ListAmiVal() {
 		iniciarSesion("javier@correo.es", "123456");
 		PO_NavView.accederAmigos(driver);
 		PO_View.checkElement(driver, "id", "filaDenoelia@correo.es");
 	}
 
-	// /*
-	// * 14.1 [AdLisUsrVal] Desde un usuario identificado en sesión como
-	// administrador
-	// * listar a todos los usuarios de la aplicación.
-	// */
-	// @Test
-	// public void T14_1_AdLisUsrVal() {
-	// iniciarSesion("admin@correo.es", "123456");
-	// PO_NavView.clickOptionConCriterio(driver, "userAdminMenu", "id",
-	// "userAdminMenu");
-	// PO_NavView.clickOption(driver, "id", "adminListUsers");
-	// PO_View.checkElement(driver, "id", "tituloPagAdmin");
-	// }
-	//
-	// /*
-	// * 15.1 [AdBorUsrVal] Desde un usuario identificado en sesión como
-	// administrador
-	// * eliminar un usuario existente en la aplicación.
-	// */
-	// @Test
-	// public void T15_1_AdBorUsrVal() {
-	// iniciarSesion("admin@correo.es", "123456");
-	// PO_NavView.clickOptionConCriterio(driver, "userAdminMenu", "id",
-	// "userAdminMenu");
-	// PO_NavView.clickOption(driver, "id", "adminListUsers");
-	// PO_View.checkElement(driver, "id", "tituloPagAdmin");
-	// PO_PrivateView.clickOption(driver, "id", "borrarjavier@correo.es");
-	// PO_PrivateView.searchUser(driver, "javi");
-	// assertTrue(PO_View.checkElementExists(driver, "id", "filaDejavier@correo.es")
-	// == false);
-	// }
-	//
-	// /*
-	// * 15.2 [AdBorUsrInVal] Intento de acceso vía URL al borrado de un usuario
-	// * existente en la aplicación. Debe utilizarse un usuario identificado en
-	// sesión
-	// * pero que no tenga perfil de administrador.
-	// */
-	//
-	// @Test
-	// public void T15_2_AdBorUsrInVal() {
-	// iniciarSesion("joni@correo.es", "123456");
-	// driver.navigate().to("http://localhost:8090/debug/deleteUser?userBorraEmail=AshRodriguez@default.es");
-	// PO_View.checkElement(driver, "id", "tituloAccesoDenegado");
-	// }
 
 	
 	
@@ -357,7 +316,7 @@ public class RedsocialnatorTests {
 	/*
 	 * Una vez que ha funcionado todo, vamos a preparar las pruebas del apartado C.
 	 */
-	//@Test
+	@Test
 	public void TC00_0_CPreparandoEntorno() {
 		SeleniumUtils.esperarSegundos(driver, 1);
 		// Javier es el que va a tener los amigos.
@@ -443,7 +402,7 @@ public class RedsocialnatorTests {
 	}
 
 	// C1.1 [CInVal]  Inicio de sesión con datos válidos
-    //@Test
+    @Test
     public void TC01_1_CInVal() {
         driver.navigate().to(URLCliente);
 
@@ -454,7 +413,7 @@ public class RedsocialnatorTests {
 
 	//C1.2 [CInInVal] Inicio de sesión con datos inválidos 
 	//(usuario no existente en la aplicación).
-	//@Test
+	@Test
 	public void TC01_2_CInInVal() {
 		driver.navigate().to(URLCliente);
 		
@@ -464,7 +423,7 @@ public class RedsocialnatorTests {
 	}
 	
 	//C.2.1 [CListAmiVal] Acceder a la lista de amigos de un usuario, que al menos tenga tres amigos.
-		//@Test
+		@Test
 		public void TC02_1_CListAmiVal() {
 			driver.navigate().to(URLCliente);
 			
@@ -478,7 +437,7 @@ public class RedsocialnatorTests {
 		
 		//C.2.2 [CListAmiFil] Acceder a la lista de amigos de un usuario, y realizar un filtrado para encontrar a un
 		//amigo concreto, el nombre a buscar debe coincidir con el de un amigo
-		//@Test
+		@Test
 		public void TC02_2_CListAmiFil() {
 			driver.navigate().to(URLCliente);
 			
@@ -492,7 +451,7 @@ public class RedsocialnatorTests {
 		
 		//C3.1 [CListMenVal] Acceder a la lista de mensajes de un amigo “chat”, la lista debe contener al menos
 		//tres mensajes.
-		//@Test
+		@Test
 		public void TC03_1_CListMenVal() {
 			driver.navigate().to(URLCliente);
 
@@ -523,27 +482,87 @@ public class RedsocialnatorTests {
 		//C5.1 [CMenLeidoVal] Identificarse en la aplicación y enviar un mensaje a un amigo, validar que el
 		//mensaje enviado aparece en el chat. Identificarse después con el usuario que recibido el mensaje y validar
 		//que tiene un mensaje sin leer, entrar en el chat y comprobar que el mensaje pasa a tener el estado leído.
+//		@Test
+//		public void TC05_1_CMenLeidoVal() {
+//			driver.navigate().to(URLCliente);
+//
+//	        iniciarSesion("javier@correo.es", "123456");
+//	        SeleniumUtils.esperarSegundos(driver, 1);
+//	        PO_View.checkElement(driver, "id", "filaDejoni@correo.es");
+//	        PO_NavView.clickOption(driver, "id", "chatDejoni@correo.es");
+//	        PO_View.checkElement(driver, "id", "btEnviarMensaje");
+//	        fillMessage(driver,"Mensaje 1");
+//	        //No lo hace
+//	        SeleniumUtils.esperarSegundos(driver, 1);
+//	        PO_View.checkElement(driver, "text", "Mensaje 1");
+//	        //Todavia no (?)
+//	        PO_NavView.clickOption(driver, "id", "logout");
+//	        iniciarSesion("joni@correo.es", "123456");
+//	        PO_View.checkElement(driver, "id", "filaDejavier@correo.es");
+//	        PO_NavView.clickOption(driver, "id", "chatDejavier@correo.es");
+//	        PO_View.checkElement(driver, "text", "Mensaje 1");
+//	        
+//	        
+//		}
+		
+		
+		//C6.1 [CListaMenNoLeidoVal] Identificarse en la aplicación y enviar tres mensajes a un amigo, validar
+		//que los mensajes enviados aparecen en el chat. Identificarse después con el usuario que recibido el
+		//mensaje y validar que el número de mensajes sin leer aparece en la propia lista de amigos.
 		//@Test
-		public void TC05_1_CMenLeidoVal() {
-			driver.navigate().to(URLCliente);
-
-	        iniciarSesion("javier@correo.es", "123456");
-	        SeleniumUtils.esperarSegundos(driver, 1);
-	        PO_View.checkElement(driver, "id", "filaDejoni@correo.es");
-	        PO_NavView.clickOption(driver, "id", "chatDejoni@correo.es");
-	        PO_View.checkElement(driver, "id", "btEnviarMensaje");
-	        fillMessage(driver,"Mensaje 1");
-	        SeleniumUtils.esperarSegundos(driver, 1);
-	        PO_View.checkElement(driver, "text", "Mensaje 1");
-	        //Todavia no (?)
-	        PO_NavView.clickOption(driver, "id", "logout");
-	        iniciarSesion("joni@correo.es", "123456");
-	        PO_View.checkElement(driver, "id", "filaDejoni@correo.es");
-	        PO_NavView.clickOption(driver, "id", "chatDejavier@correo.es");
-	        PO_View.checkElement(driver, "text", "Mensaje 1");
-	        
-	        
-		}
+//		public void TC06_1_CListaMenNoLeidoVal() {
+//			driver.navigate().to(URLCliente);
+//
+//	        iniciarSesion("javier@correo.es", "123456");
+//	        SeleniumUtils.esperarSegundos(driver, 1);
+//	        PO_View.checkElement(driver, "id", "filaDejoni@correo.es");
+//	        PO_NavView.clickOption(driver, "id", "chatDejoni@correo.es");
+//	        PO_View.checkElement(driver, "id", "btEnviarMensaje");
+//	        fillMessage(driver,"Mensaje 1");
+//	        fillMessage(driver,"Mensaje 2");
+//	        fillMessage(driver,"Mensaje 3");
+//	        SeleniumUtils.esperarSegundos(driver, 1);
+//	        PO_View.checkElement(driver, "text", "Mensaje 1");
+//	        PO_View.checkElement(driver, "text", "Mensaje 2");
+//	        PO_View.checkElement(driver, "text", "Mensaje 3");
+//	        //Todavia no (?)
+//	        PO_NavView.clickOption(driver, "id", "logout");
+//	        iniciarSesion("joni@correo.es", "123456");
+//	        PO_View.checkElement(driver, "id", "filaDejoni@correo.es");
+//	        PO_NavView.clickOption(driver, "id", "chatDejavier@correo.es");
+//	        PO_View.checkElement(driver, "text", "Mensaje 1");
+//	        PO_View.checkElement(driver, "text", "Mensaje 2");
+//	        PO_View.checkElement(driver, "text", "Mensaje 3");
+//	        
+//		}
+		
+		
+		//C7.1 [COrdenMenVall] Identificarse con un usuario A que al menos tenga 3 amigos, ir al chat del ultimo
+		//amigo de la lista y enviarle un mensaje, volver a la lista de amigos y comprobar que el usuario al que se le
+		//ha enviado el mensaje esta en primera posición. Identificarse con el usuario B y enviarle un mensaje al
+		//usuario A. Volver a identificarse con el usuario A y ver que el usuario que acaba de mandarle el mensaje
+		//es el primero en su lisa de amigos.
+		//@Test
+//		public void TC07_1_COrdenMenVall() {
+//			driver.navigate().to(URLCliente);
+//
+//	        iniciarSesion("javier@correo.es", "123456");
+//	        SeleniumUtils.esperarSegundos(driver, 1);
+//	        PO_View.checkElement(driver, "id", "filaDejoni@correo.es");
+//	        PO_NavView.clickOption(driver, "id", "chatDejoni@correo.es");
+//	        PO_View.checkElement(driver, "id", "btEnviarMensaje");
+//	        fillMessage(driver,"Mensaje 1");
+//	        SeleniumUtils.esperarSegundos(driver, 1);
+//	        PO_View.checkElement(driver, "text", "Mensaje 1");
+//	        //Todavia no (?)
+//	        PO_NavView.clickOption(driver, "id", "logout");
+//	        iniciarSesion("joni@correo.es", "123456");
+//	        PO_View.checkElement(driver, "id", "filaDejoni@correo.es");
+//	        PO_NavView.clickOption(driver, "id", "chatDejavier@correo.es");
+//	        PO_View.checkElement(driver, "text", "Mensaje 1");
+//	        
+//	        
+//		}
 	
 	private static void iniciarSesion(String email, String pass) {
 		// Vamos al formulario de logueo.
