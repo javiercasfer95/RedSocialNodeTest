@@ -33,10 +33,10 @@ public class RedsocialnatorTests {
 	// static String PathFirefox = "C:\\Path\\FirefoxPortable.exe";
 
 	// Path Joni
-	static String PathFirefox ="P:\\SDI\\P5\\Firefox46.0.win\\Firefox46.win\\FirefoxPortable.exe";
+	//static String PathFirefox ="P:\\SDI\\P5\\Firefox46.0.win\\Firefox46.win\\FirefoxPortable.exe";
 
 	// Path Javi MSI
-	//static String PathFirefox = "D:\\Programs\\Firefox46.win\\FirefoxPortable.exe";
+	static String PathFirefox = "D:\\Programs\\Firefox46.win\\FirefoxPortable.exe";
 
 	// Común a Windows y a MACOSX
 	static WebDriver driver = getDriver(PathFirefox);
