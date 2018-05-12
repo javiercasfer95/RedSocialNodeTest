@@ -485,7 +485,6 @@ public class RedsocialnatorTests {
 	        PO_View.checkElement(driver, "id", "filaDejoni@correo.es");
 	        PO_NavView.clickOption(driver, "id", "chatDejoni@correo.es");
 	        PO_View.checkElement(driver, "id", "btEnviarMensaje");
-	        //Falta comprobar mensajes
 	        PO_View.checkElement(driver, "text", "Mensaje 1");
 	        PO_View.checkElement(driver, "text", "Mensaje 2");
 	        PO_View.checkElement(driver, "text", "Mensaje 3");
